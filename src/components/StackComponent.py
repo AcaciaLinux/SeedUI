@@ -12,7 +12,7 @@ from components import PartitionComponent
 import blog
 import gi
 gi.require_version("Gtk", "4.0")
-from gi.repository import Gtk, GObject
+from gi.repository import Gtk, Gdk
 
 class StackWindow(Gtk.ApplicationWindow):
 
@@ -51,6 +51,26 @@ class StackWindow(Gtk.ApplicationWindow):
         #checkbutton.bind_property("active", page1, "needs-attention", GObject.BindingFlags.DEFAULT)
 
         stack_switcher = Gtk.StackSwitcher()
+        stack_switcher.set_sensitive(False)
+
+        style_provider = Gtk.CssProvider()
+
+        #stylesheet
+        data = """
+        .stack-switcher button:checked {
+            color: green;
+        }
+
+        .stack-switcher button {
+            color: DimGrey;
+        }
+        """
+        style_provider.load_from_data(data, len(data))
+
+        #Add a style provider for the default display
+        Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+
+        stack_switcher.set_css_classes(['stack-switcher'])
         stack_switcher.set_stack(self.stack)
         header.set_title_widget(stack_switcher)
     
