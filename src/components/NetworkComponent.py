@@ -33,7 +33,7 @@ class network_component(Gtk.Box):
         # Setup the control box
         control_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         control_box.set_valign(Gtk.Align.END)
-        control_box.append(ForwardBackComponent.forward_back_component(self))
+        control_box.append(ForwardBackComponent.forward_back_component(parent_component))
 
         self.prepend(main_box)
         self.append(control_box)
