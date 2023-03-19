@@ -8,6 +8,7 @@ from components import NetworkComponent
 from components import SetsComponent
 from components import UserComponent
 from components import PartitionComponent
+from components import InstallComponent
 
 import blog
 import gi
@@ -47,6 +48,8 @@ class StackWindow(Gtk.ApplicationWindow):
         self.steps.append(self.stack.add_titled(SetsComponent.sets_component(self, orientation=Gtk.Orientation.VERTICAL), "sets", "Sets"))
         self.steps.append(self.stack.add_titled(UserComponent.user_component(self, orientation=Gtk.Orientation.VERTICAL), "user", "Configuration"))
         self.steps.append(self.stack.add_titled(PartitionComponent.partition_component(self, orientation=Gtk.Orientation.VERTICAL), "partition", "Disk Setup"))
+        self.steps.append(self.stack.add_titled(InstallComponent.install_component(self, orientation=Gtk.Orientation.VERTICAL), "install", "Install"))
+
 
         #checkbutton.bind_property("active", page1, "needs-attention", GObject.BindingFlags.DEFAULT)
 
@@ -121,7 +124,11 @@ def on_activate(app):
     win = StackWindow(application=app)
     win.present()
 
+def on_shutdown(app):
+    blog.info("Shutting down.")
+
 def bootstrap_component():
     app = Gtk.Application(application_id="org.AcaciaLinux.SeedUI")
     app.connect("activate", on_activate)
+    app.connect("shutdown", on_shutdown)
     app.run(None)

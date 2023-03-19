@@ -56,9 +56,6 @@ class sets_component(Gtk.Box):
 
         main_box.append(set_box)
 
-
-
-
         # Setup the control box
         control_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         control_box.set_valign(Gtk.Align.END)
